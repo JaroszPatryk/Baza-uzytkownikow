@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Użytkownicy</title>
+</head>
+<body>
+    <div th:fragment="navigation">
+        Menu:
+        <ul>
+            <li><a th:href="@{/}">Strona główna</a></li>
+            <li><a th:href="@{/}">Import danych</a></li>
+            <li><a th:href="@{/}">Lista użytkowników</a></li>
+        </ul>
+    </div>
+
+    <div th:fragment="footer">
+        <p>Copyright by Patryk Jarosz 2021</p>
+    </div>
+</body>
+</html>
