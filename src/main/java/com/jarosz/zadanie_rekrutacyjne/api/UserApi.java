@@ -36,10 +36,4 @@ public class UserApi {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity createMeal(@RequestBody  User user) {
-
-        userService.create(user);
-        return ResponseEntity.status(201).build();
-    }
 }

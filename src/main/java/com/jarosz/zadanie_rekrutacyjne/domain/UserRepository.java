@@ -13,5 +13,5 @@ public interface UserRepository {
 
     List<User> findByParams(SearchParams searchParams);
 
-    void create(User user);
+    void saveAll(List<User> user);
 }

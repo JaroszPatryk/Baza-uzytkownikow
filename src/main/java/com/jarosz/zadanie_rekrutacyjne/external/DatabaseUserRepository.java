@@ -42,9 +42,13 @@ public class DatabaseUserRepository implements UserRepository {
     }
 
     @Override
-    public void create(User user) {
-        jpaUserRepository.save(toEntity(user));
+    public void saveAll(List<User> user) {
+        List<UserEntity> collect = user.stream()
+                .map(u -> toEntity(u))
+                .collect(Collectors.toList());
+        jpaUserRepository.saveAll(collect);
     }
+
 
     private User toDomain(UserEntity entity) {
         return User.builder()
