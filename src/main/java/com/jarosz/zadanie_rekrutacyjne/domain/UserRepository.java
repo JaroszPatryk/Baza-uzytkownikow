@@ -14,4 +14,6 @@ public interface UserRepository {
     List<User> findByParams(SearchParams searchParams);
 
     void saveAll(List<User> user);
+
+
 }

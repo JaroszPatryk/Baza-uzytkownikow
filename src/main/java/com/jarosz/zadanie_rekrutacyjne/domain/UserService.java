@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.*;
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +29,7 @@ public class UserService {
         return userRepository.findByParams(searchParams);
     }
 
-    public void createXml() {
+    public Object createXml() {
         Users users = new Users();
         try {
             XmlMapper mapper = new XmlMapper();
@@ -51,6 +50,7 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 

@@ -5,35 +5,28 @@
     <title>Użytkownicy</title>
 </head>
 <body>
-<table class="table">
+<script type="text/javascript" src="plik.js"></script>
+
+<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+
     <thead>
     <tr>
-        <th scope="col">N.O.</th>
-        <th scope="col">Name</th>
-        <th scope="col">Surname</th>
-        <th scope="col">Login</th>
+        <th>O.N.</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Login</th>
+
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-    </tr>
+        <tr th:each="user : ${readUser}">
+            <td><span th:text="${user.id}"></span></td>
+            <td><span th:text="${user.name}"></span></td>
+            <td><span th:text="${user.surname}"></span></td>
+            <td><span th:text="${user.login}"></span></td>
+        </tr>
     </tbody>
+
 </table>
 </body>
 </html>
