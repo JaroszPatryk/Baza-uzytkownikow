@@ -62,22 +62,20 @@ public class UserService {
     }
 
 
-    public void readXml(String path) throws JAXBException{
-        File xmlFile = new File(path);
+    public void readXml() throws JAXBException{
+        File xmlFile = new File("src\\main\\resources\\users.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Users.class, User.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         Users user = (Users)jaxbUnmarshaller.unmarshal(xmlFile);
 
         userRepository.saveAll(user.getUser());
+
     }
 
     public String generateMD5(String surname) {
         try {
-
             MessageDigest md = MessageDigest.getInstance("MD5");
-
             byte[] messageDigest = md.digest(surname.getBytes());
-
             BigInteger no = new BigInteger(1, messageDigest);
 
             String hashtext = no.toString(16);

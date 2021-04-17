@@ -3,10 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Użytkownicy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <style>
+        #header {
+            position: center;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: #406ef3;
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            background: #98b0f6;
+        }
+
+        #button1 {
+            border: black;
+            color: white;
+            padding: 40px 32px;
+        }
+
+    </style>
 </head>
 <body>
-<label class="form-label" for="customFile">Default file input example</label>
-<input type="file" class="form-control" id="customFile" />
 
+<h1 id="header" align="center">Zarządzanie listą użytkowników</h1>
+<h2 id="button1" align="center"><input style="width: 400px" type="button" value="Strona główna" onClick="location.href='/';"/></h2>
+<!--<input type="submit" onclick="${read}">-->
+<form method="post" th:action="@{/mvc/meal/addOrEdit}" th:object="${meal}">
+<label class="form-label" for="customFile">Wgraj plik</label>
+<input type="file" class="form-control" id="customFile" />
+<input type="submit" value="Zapisz"/>
+</form>
+<div  id="footer" align="center" >
+    <p>Copyright by Patryk Jarosz 2021</p>
+</div>
 </body>
 </html>

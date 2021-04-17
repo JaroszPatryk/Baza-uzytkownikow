@@ -3,12 +3,10 @@ package com.jarosz.zadanie_rekrutacyjne.web;
 
 import com.jarosz.zadanie_rekrutacyjne.dataUser.SearchParams;
 import com.jarosz.zadanie_rekrutacyjne.domain.User;
-import com.jarosz.zadanie_rekrutacyjne.domain.UserRepository;
 import com.jarosz.zadanie_rekrutacyjne.domain.UserService;
 import com.jarosz.zadanie_rekrutacyjne.external.DatabaseUserRepository;
 import com.jarosz.zadanie_rekrutacyjne.external.UserEntity;
 import lombok.AllArgsConstructor;
-import org.dom4j.rule.Mode;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.xml.bind.JAXBException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,11 +36,11 @@ public class PageWithFormToAddXml {
         mav.setViewName("form");
         return mav ;
     }
-//    @GetMapping("/readxml")
-//    String readFileXml() throws JAXBException{
-//        userService.readXml();
-//        return "form" ;
-//    }
+    @GetMapping("/readxml")
+    String readFileXml() throws JAXBException{
+        userService.readXml();
+        return "form" ;
+    }
 
     @GetMapping("/{page}")
     ModelAndView displayUsersPage(@PathVariable("page") int page, String surname) throws NoSuchAlgorithmException {
@@ -51,17 +50,48 @@ public class PageWithFormToAddXml {
         List<User> content = paginated.getContent().stream()
                 .map(databaseUserRepository::toDomain)
                 .collect(Collectors.toList());
+        int startPagination;
+        int endPagination;
+        int totalPages = paginated.getTotalPages();
+
+        if (totalPages > page + 3) {
+            endPagination = page + 3;
+        } else {
+            endPagination = totalPages;
+        }
+
+        if (page - 3 < 1) {
+            startPagination = 1;
+        } else {
+            startPagination = page - 3;
+        }
+        List<Integer> pagination = new ArrayList<>();
+
+        for (int i = startPagination; i <= endPagination; i++) {
+            if(i== startPagination && startPagination!=1){
+                pagination.add(1);
+            }
+            pagination.add(i);
+        }
+
+        if(!pagination.get(pagination.size()-1).equals(totalPages)){
+            pagination.add(totalPages);
+        }
         mav.addObject("users", content);
 //        mav.addObject("surnameWithMD5", userService.generateMD5(surname));
         mav.addObject("totalElements", paginated.getTotalElements());
         mav.addObject("totalPages", paginated.getTotalPages());
         mav.addObject("page", page);
+        mav.addObject("pagination", pagination);
         return mav;
     }
-    @PostMapping("/search")
-    ModelAndView handleUserFiltering(@ModelAttribute("params") SearchParams params) {
+    @GetMapping("/search")
+    ModelAndView handleUserFiltering(@RequestParam("name") String name,
+                                     @RequestParam("surname") String surname,
+                                     @RequestParam("login") String login) {
+        SearchParams params = new SearchParams(name, surname, login);
         ModelAndView mav = new ModelAndView("dataList.html");
-        mav.addObject("user", userService.searchByParams(params));
+        mav.addObject("users", userService.searchByParams(params));
         mav.addObject("params", params);
 
         return mav;
