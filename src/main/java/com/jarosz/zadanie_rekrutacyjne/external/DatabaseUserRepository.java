@@ -5,6 +5,8 @@ import com.jarosz.zadanie_rekrutacyjne.dataUser.SearchParams;
 import com.jarosz.zadanie_rekrutacyjne.domain.User;
 import com.jarosz.zadanie_rekrutacyjne.domain.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,15 +25,11 @@ public class DatabaseUserRepository implements UserRepository {
                 .map(this::toDomain);
     }
 
-
-
     @Override
-    public List<User> findAll() {
-        return jpaUserRepository.findAll()
-                .stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
+    public Page<UserEntity> findAll(Pageable numberOfPages) {
+        return jpaUserRepository.findAll(numberOfPages);
     }
+
 
     @Override
     public List<User> findByParams(SearchParams searchParams) {
@@ -40,6 +38,7 @@ public class DatabaseUserRepository implements UserRepository {
                 .map(this::toDomain)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public void saveAll(List<User> user) {
@@ -50,7 +49,7 @@ public class DatabaseUserRepository implements UserRepository {
     }
 
 
-    private User toDomain(UserEntity entity) {
+    public User toDomain(UserEntity entity) {
         return User.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -59,7 +58,7 @@ public class DatabaseUserRepository implements UserRepository {
                 .build();
     }
 
-    private UserEntity toEntity(User user) {
+    public UserEntity toEntity(User user) {
         return UserEntity.builder()
                 .id(user.getId())
                 .name(user.getName())

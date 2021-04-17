@@ -23,13 +23,13 @@ public class CustomDatabaseUserRepositoryImpl implements CustomDatabaseUserRepos
         CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
         Root<UserEntity> rootFirst = query.from(UserEntity.class);
 
-        query.select(rootFirst);
+//        query.select(rootFirst);
         List<Predicate> predicates = new ArrayList<>();
         if(searchParams.getName() != null && !searchParams.getName().isEmpty()){
             predicates.add(criteriaBuilder.equal(rootFirst.get("name"), searchParams.getName()));
         }
         if(searchParams.getSurname() != null && !searchParams.getSurname().isEmpty()){
-            predicates.add(criteriaBuilder.equal(rootFirst.get("surName"), searchParams.getSurname()));
+            predicates.add(criteriaBuilder.equal(rootFirst.get("surname"), searchParams.getSurname()));
         }
         if(searchParams.getLogin() != null && !searchParams.getLogin().isEmpty()){
             predicates.add(criteriaBuilder.equal(rootFirst.get("login"), searchParams.getLogin()));
