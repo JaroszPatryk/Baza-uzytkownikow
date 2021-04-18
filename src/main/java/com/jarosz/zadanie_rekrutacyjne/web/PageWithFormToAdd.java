@@ -16,11 +16,25 @@ public class PageWithFormToAdd {
 
     private final UserService userService;
 
-//    @GetMapping("/")
-//    String readFileXml() throws JAXBException {
-//
-//        return "form.html" ;
-//    }
+    @GetMapping("/")
+    String showFormPage(){
+        return "form.html";
+    }
+    @GetMapping("/createxml")
+    ModelAndView createFileXml()  {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("createXml", userService.createXml());
+        mav.setViewName("form");
+        return mav ;
+    }
+
+    @GetMapping("/readxml")
+    Object readFileXml(String path) throws JAXBException {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("readxml", userService.readXml(path));
+        mav.setViewName("form.html");
+        return mav ;
+    }
 //@GetMapping("/readxml")
 //ModelAndView readFileXml() throws JAXBException{
 //    ModelAndView mav = new ModelAndView();

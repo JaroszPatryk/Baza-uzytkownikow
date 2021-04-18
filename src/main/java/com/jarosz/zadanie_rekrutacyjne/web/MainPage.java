@@ -13,10 +13,7 @@ import java.time.LocalDate;
 public class MainPage {
 
     @GetMapping("/")
-    ModelAndView displayMainPage() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("date", LocalDate.now().toString());
-        mav.setViewName("main.html");
-        return mav;
+    String displayMainPage() {
+        return "main.html";
     }
 }

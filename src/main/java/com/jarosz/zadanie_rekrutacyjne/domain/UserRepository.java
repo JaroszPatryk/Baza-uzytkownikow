@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-    Optional<User> findOne(Long id);
+//    Optional<User> findOne(Long id);
 
     Page<UserEntity> findAll(Pageable numberOfPages);
 

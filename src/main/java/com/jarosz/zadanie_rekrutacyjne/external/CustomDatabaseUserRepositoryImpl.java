@@ -26,13 +26,13 @@ public class CustomDatabaseUserRepositoryImpl implements CustomDatabaseUserRepos
 //        query.select(rootFirst);
         List<Predicate> predicates = new ArrayList<>();
         if(searchParams.getName() != null && !searchParams.getName().isEmpty()){
-            predicates.add(criteriaBuilder.equal(rootFirst.get("name"), searchParams.getName()));
+            predicates.add(criteriaBuilder.like(rootFirst.get("name"), "%" + searchParams.getName() + "%"));
         }
         if(searchParams.getSurname() != null && !searchParams.getSurname().isEmpty()){
-            predicates.add(criteriaBuilder.equal(rootFirst.get("surname"), searchParams.getSurname()));
+            predicates.add(criteriaBuilder.like(rootFirst.get("surname"), "%" + searchParams.getSurname() + "%"));
         }
         if(searchParams.getLogin() != null && !searchParams.getLogin().isEmpty()){
-            predicates.add(criteriaBuilder.equal(rootFirst.get("login"), searchParams.getLogin()));
+            predicates.add(criteriaBuilder.like(rootFirst.get("login"), "%" + searchParams.getLogin() + "%"));
         }
 
         query.where(predicates.toArray(new Predicate[predicates.size()]));

@@ -23,33 +23,42 @@ import java.util.stream.Collectors;
 @Controller
 @AllArgsConstructor()
 @RequestMapping("/user")
-public class PageWithFormToAddXml {
+public class PageWithFormList {
 
     private final UserService userService;
     private final DatabaseUserRepository databaseUserRepository;
 
+    @GetMapping
+    public ModelAndView displayMainPage() {
+        return displayUsersPage(1);
+    }
+//    @GetMapping("/user")
+//    String showFormPage(){
+//        return "dataList";
+//    }
 
-    @GetMapping("/createxml")
-    ModelAndView createFileXml()  {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("createXml", userService.createXml());
-        mav.setViewName("form");
-        return mav ;
-    }
-    @GetMapping("/readxml")
-    String readFileXml() throws JAXBException{
-        userService.readXml();
-        return "form" ;
-    }
+//    @GetMapping("/user/createxml")
+//    ModelAndView createFileXml()  {
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("createXml", userService.createXml());
+//        mav.setViewName("form");
+//        return mav ;
+//    }
+//    @GetMapping("/readxml")
+//    String readFileXml() throws JAXBException{
+//        userService.readXml();
+//        return "form" ;
+//    }
 
     @GetMapping("/{page}")
-    ModelAndView displayUsersPage(@PathVariable("page") int page, String surname) throws NoSuchAlgorithmException {
-        int pageSize = 100;
-        ModelAndView mav = new ModelAndView("dataList.html");
+    ModelAndView displayUsersPage(@PathVariable("page") int page) {
+        int pageSize = 10;
+        ModelAndView mav = new ModelAndView("dataList");
         Page<UserEntity> paginated = userService.findPaginated(page, pageSize);
         List<User> content = paginated.getContent().stream()
                 .map(databaseUserRepository::toDomain)
                 .collect(Collectors.toList());
+
         int startPagination;
         int endPagination;
         int totalPages = paginated.getTotalPages();
@@ -68,17 +77,19 @@ public class PageWithFormToAddXml {
         List<Integer> pagination = new ArrayList<>();
 
         for (int i = startPagination; i <= endPagination; i++) {
-            if(i== startPagination && startPagination!=1){
+            if(i == startPagination && startPagination!=1){
                 pagination.add(1);
             }
+
             pagination.add(i);
         }
-
-        if(!pagination.get(pagination.size()-1).equals(totalPages)){
-            pagination.add(totalPages);
+        if(pagination.size() > 0){
+            if(!pagination.get(pagination.size()-1).equals(totalPages)){
+                pagination.add(totalPages);
+            }
         }
+
         mav.addObject("users", content);
-//        mav.addObject("surnameWithMD5", userService.generateMD5(surname));
         mav.addObject("totalElements", paginated.getTotalElements());
         mav.addObject("totalPages", paginated.getTotalPages());
         mav.addObject("page", page);

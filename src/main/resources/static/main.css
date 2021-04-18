@@ -1,0 +1,46 @@
+.sizeTable
+{
+    width: 100%;
+    height: auto;
+}
+
+
+#header {
+    position: center;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #406ef3;
+}
+
+#button2 {
+    border: black;
+    color: white;
+    padding: 40px 32px;
+
+}
+
+#button2 {
+    border: black;
+    color: white;
+    padding: 40px 32px;
+
+}
+
+#footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background: #98b0f6;
+
+}
+
+#search{
+    position: absolute;
+    right: 50px;
+}
+.hidden {
+    display: none;
+}
+

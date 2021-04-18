@@ -24,9 +24,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findOne(id);
-    }
+//    public Optional<User> getUserById(Long id) {
+//        return userRepository.findOne(id);
+//    }
 
     public Page<UserEntity> findPaginated(int pageNr, int pageSize) {
         PageRequest pageable = PageRequest.of(pageNr - 1, pageSize);
@@ -62,14 +62,14 @@ public class UserService {
     }
 
 
-    public void readXml() throws JAXBException{
+    public Object readXml(String path) throws JAXBException{
         File xmlFile = new File("src\\main\\resources\\users.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Users.class, User.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         Users user = (Users)jaxbUnmarshaller.unmarshal(xmlFile);
 
         userRepository.saveAll(user.getUser());
-
+        return null;
     }
 
     public String generateMD5(String surname) {

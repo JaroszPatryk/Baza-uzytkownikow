@@ -5,42 +5,28 @@
     <title>Użytkownicy</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <style>
-        #header {
-            position: center;
-            bottom: 0;
-            width: 100%;
-            height: 60px;
-            background: #406ef3;
-        }
+    <link rel="stylesheet" href="/main.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        #footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 30px;
-            background: #98b0f6;
-        }
+</head>S
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
-        #button1 {
-            border: black;
-            color: white;
-            padding: 40px 32px;
-        }
+<h1 id="header" align="center">User list management</h1>
+<h2 id="button1" align="center"><input style="width: 400px" type="button" value="Home" onClick="location.href='/';"/>
+</h2>
 
-    </style>
-</head>
-<body>
+<a href="/form/createxml"><h2 align="center"><input type="button" value="Generate file"/></h2></a>
 
-<h1 id="header" align="center">Zarządzanie listą użytkowników</h1>
-<h2 id="button1" align="center"><input style="width: 400px" type="button" value="Strona główna" onClick="location.href='/';"/></h2>
-<!--<input type="submit" onclick="${read}">-->
 <form method="post" th:action="@{/mvc/meal/addOrEdit}" th:object="${meal}">
-<label class="form-label" for="customFile">Wgraj plik</label>
-<input type="file" class="form-control" id="customFile" />
-<input type="submit" value="Zapisz"/>
+    <label class="form-label" for="customFile">Upload file:</label>
+    <input style="width: 50%"  type="file" class="form-control" id="customFile" />
+    <a href="/form/readxml"><input type="button" value="Upload"/></a>
 </form>
-<div  id="footer" align="center" >
+<!---->
+<div id="footer" align="center">
     <p>Copyright by Patryk Jarosz 2021</p>
 </div>
 </body>

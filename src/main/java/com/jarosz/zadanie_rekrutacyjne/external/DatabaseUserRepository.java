@@ -19,11 +19,11 @@ public class DatabaseUserRepository implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
 
-    @Override
-    public Optional<User> findOne(Long id) {
-        return jpaUserRepository.findById(id)
-                .map(this::toDomain);
-    }
+//    @Override
+//    public Optional<User> findOne(Long id) {
+//        return jpaUserRepository.findById(id)
+//                .map(this::toDomain);
+//    }
 
     @Override
     public Page<UserEntity> findAll(Pageable numberOfPages) {
