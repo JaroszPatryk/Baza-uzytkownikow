@@ -8,6 +8,7 @@ import com.twmacinta.util.MD5;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -24,18 +25,19 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    public Optional<User> getUserById(Long id) {
-//        return userRepository.findOne(id);
-//    }
-
     public Page<UserEntity> findPaginated(int pageNr, int pageSize) {
         PageRequest pageable = PageRequest.of(pageNr - 1, pageSize);
         return userRepository.findAll(pageable);
     }
 
-    public List<User> searchByParams(SearchParams searchParams) {
-        return userRepository.findByParams(searchParams);
+    public Page<UserEntity> findPaginatedWithParams(SearchParams searchParams, int pageNr, int pageSize){
+        PageRequest pageable = PageRequest.of(pageNr -1, pageSize);
+        return userRepository.findPaginatedByParams(searchParams, pageable);
     }
+
+//    public List<User> searchByParams(SearchParams searchParams) {
+//        return userRepository.findByParams(searchParams);
+//    }
 
     public Object createXml() {
         Users users = new Users();
@@ -62,7 +64,7 @@ public class UserService {
     }
 
 
-    public Object readXml(String path) throws JAXBException{
+    public Object readXml() throws JAXBException{
         File xmlFile = new File("src\\main\\resources\\users.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Users.class, User.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();

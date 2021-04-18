@@ -11,22 +11,27 @@
     <script
             src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-</head>S
+</head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
 <h1 id="header" align="center">User list management</h1>
-<h2 id="button1" align="center"><input style="width: 400px" type="button" value="Home" onClick="location.href='/';"/>
-</h2>
+<!--<h2 id="button1" align="center"><input style="width: 400px" type="button" value="Home" onClick="location.href='/';"/>-->
+<!--</h2>-->
+<a href="/"><h2 id="button1" align="center"><input style="width: 400px" type="button" value="Home"/></h2></a>
+<a href="/user"><h2 id="button2" align="center"><input style="width: 400px" type="button" value="Users list"/></h2></a>
 
-<a href="/form/createxml"><h2 align="center"><input type="button" value="Generate file"/></h2></a>
+<a href="/form/createxml"><input type="button" value="GENERATE FILE TO USE"/></a>
+<a href="/form/readxml"><input type="button" value="READ GENERATED FILE"/></a>
 
-<form method="post" th:action="@{/mvc/meal/addOrEdit}" th:object="${meal}">
-    <label class="form-label" for="customFile">Upload file:</label>
-    <input style="width: 50%"  type="file" class="form-control" id="customFile" />
-    <a href="/form/readxml"><input type="button" value="Upload"/></a>
-</form>
+<!--<form method="post" th:action="@{/mvc/meal/addOrEdit}" th:object="${meal}">-->
+<!--    <label class="form-label" for="customFile">Upload file:</label>-->
+<!--    <input style="width: 50%"  type="file" class="form-control" id="customFile" />-->
+<!--    <a href="/form/readxml"><input type="button" value="Upload"/></a>-->
+<!--</form>-->
+<!--##########TU MIAŁ BYĆ FORMULARZ DO WGRANIA
+DOWOLNEGO PLIKU ALE ZBRAKŁO NA TO CZASU ;)###-->
 <!---->
-<div id="footer" align="center">
+<div id="footer" style="position: fixed" align="center">
     <p>Copyright by Patryk Jarosz 2021</p>
 </div>
 </body>

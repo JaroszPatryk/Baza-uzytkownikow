@@ -48,6 +48,14 @@ public class DatabaseUserRepository implements UserRepository {
         jpaUserRepository.saveAll(collect);
     }
 
+    @Override
+    public Page<UserEntity> findPaginatedByParams(SearchParams searchParams, Pageable pageable) {
+        String name = searchParams.getName();
+        String surname = searchParams.getSurname();
+        String login = searchParams.getLogin();
+        return jpaUserRepository.findPaginatedByParams(name, surname, login, pageable);
+    }
+
 
     public User toDomain(UserEntity entity) {
         return User.builder()

@@ -15,11 +15,11 @@
                                        onClick="location.href='/';"/></h2>
 
 
-<form method="get" th:action="@{/user/search}">
+<form method="get" th:action="@{/user/search/1}">
 
-    <h5 align="right">name: <input type="text" field="*{name}" name="name"/></br></h5>
-    <h5 align="right">surname: <input type="text" field="*{surname}" name="surname"/></br></h5>
-    <h5 align="right">login: <input type="text" field="*{login}" name="login"/></br></h5>
+    <h5 align="right">name: <input type="text" name="name" th:value="${params.name}"/></br></h5>
+    <h5 align="right">surname: <input type="text" name="surname" th:value="${params.surname}"/></br></h5>
+    <h5 align="right">login: <input type="text" name="login" th:value="${params.login}"/></br></h5>
 
     <h5 align="right"><input type="submit" value="Filter"/></h5>
 
@@ -48,23 +48,23 @@
 <nav class="nav-pagination" aria-label="Page navigation example">
     <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
-            <a th:if="${page>1}" class="page-link" th:href="@{'/user/' + ${page-1}}">
+            <a th:if="${page>1}" class="page-link" th:href="@{${path} + ${page-1} + ${query}}">
                 <
             </a>
         </li>
         <li class="page-item" th:each="p : ${pagination}">
-            <a th:unless="${page==p}" class="page-link" th:href="@{'/user/' + ${p}}" th:text="${p}"></a>
+            <a th:unless="${page==p}" class="page-link" th:href="@{${path} + ${p} + ${query}}" th:text="${p}"></a>
             <a th:if="${page==p}" style="color: lightgray; background-color: #001A2C; cursor: default"
                class="page-link" th:text="${p}"></a>
         </li>
         <li class="page-item">
-            <a th:if="${page<totalPages}" class="page-link" th:href="@{'/user/' + ${page+1}}">
+            <a th:if="${page<totalPages}" class="page-link" th:href="@{${path} + ${page+1} + ${query}}">
                 >
             </a>
         </li>
     </ul>
 </nav>
-<div id="footer" align="center">
+<div id="footer" style="position: static" align="center">
     <p>Copyright by Patryk Jarosz 2021</p>
 </div>
 <script src="/plik.js"></script>

@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import javax.xml.bind.JAXBException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,36 +30,30 @@ public class PageWithFormList {
     public ModelAndView displayMainPage() {
         return displayUsersPage(1);
     }
-//    @GetMapping("/user")
-//    String showFormPage(){
-//        return "dataList";
-//    }
-
-//    @GetMapping("/user/createxml")
-//    ModelAndView createFileXml()  {
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("createXml", userService.createXml());
-//        mav.setViewName("form");
-//        return mav ;
-//    }
-//    @GetMapping("/readxml")
-//    String readFileXml() throws JAXBException{
-//        userService.readXml();
-//        return "form" ;
-//    }
 
     @GetMapping("/{page}")
     ModelAndView displayUsersPage(@PathVariable("page") int page) {
         int pageSize = 10;
+        SearchParams params = new SearchParams("","","");
         ModelAndView mav = new ModelAndView("dataList");
         Page<UserEntity> paginated = userService.findPaginated(page, pageSize);
+        getUserListWithPagination(page, mav, paginated);
+        mav.addObject("path", "/user/");
+        mav.addObject("params", params);
+        mav.addObject("query", "");
+        return mav;
+    }
+
+    private void getUserListWithPagination(int page, ModelAndView mav, Page<UserEntity> paginated) {
+
         List<User> content = paginated.getContent().stream()
                 .map(databaseUserRepository::toDomain)
                 .collect(Collectors.toList());
 
-        int startPagination;
-        int endPagination;
-        int totalPages = paginated.getTotalPages();
+        Integer startPagination;
+        Integer endPagination;
+        Integer totalPages = paginated.getTotalPages();
+        List<Integer> pagination = new ArrayList<>();
 
         if (totalPages > page + 3) {
             endPagination = page + 3;
@@ -74,7 +66,7 @@ public class PageWithFormList {
         } else {
             startPagination = page - 3;
         }
-        List<Integer> pagination = new ArrayList<>();
+
 
         for (int i = startPagination; i <= endPagination; i++) {
             if(i == startPagination && startPagination!=1){
@@ -91,19 +83,31 @@ public class PageWithFormList {
 
         mav.addObject("users", content);
         mav.addObject("totalElements", paginated.getTotalElements());
-        mav.addObject("totalPages", paginated.getTotalPages());
+        mav.addObject("totalPages", totalPages);
         mav.addObject("page", page);
         mav.addObject("pagination", pagination);
-        return mav;
     }
+
     @GetMapping("/search")
-    ModelAndView handleUserFiltering(@RequestParam("name") String name,
-                                     @RequestParam("surname") String surname,
-                                     @RequestParam("login") String login) {
+    ModelAndView diplayFirstPageOfSearchResult(@RequestParam("name") String name,
+                                               @RequestParam("surname") String surname,
+                                               @RequestParam("login") String login) {
+        return handleUserFiltering(name, surname, login, 1);
+    }
+    @GetMapping("/search/{page}")
+    ModelAndView handleUserFiltering(@RequestParam(value = "name", required = false) String name,
+                                     @RequestParam(value = "surname", required = false) String surname,
+                                     @RequestParam(value = "login", required = false) String login,
+                                     @PathVariable("page") Integer page) {
         SearchParams params = new SearchParams(name, surname, login);
         ModelAndView mav = new ModelAndView("dataList.html");
-        mav.addObject("users", userService.searchByParams(params));
+        Page<UserEntity> paginated = userService.findPaginatedWithParams(params, page, 10);
+        getUserListWithPagination(page, mav, paginated);
+
         mav.addObject("params", params);
+
+        mav.addObject("path", "/user/search/");
+        mav.addObject("query", "?name=" + name + "&surname=" + surname + "&login=" + login);
 
         return mav;
     }

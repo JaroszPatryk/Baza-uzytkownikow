@@ -28,8 +28,9 @@
 }
 
 #footer {
-    position: sticky;
-    bottom: 0;
+
+    clear: both;
+    bottom: 0px;
     width: 100%;
     height: 30px;
     background: #98b0f6;

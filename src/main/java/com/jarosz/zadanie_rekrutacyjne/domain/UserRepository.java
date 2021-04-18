@@ -18,5 +18,5 @@ public interface UserRepository {
 
     void saveAll(List<User> user);
 
-
+    Page<UserEntity> findPaginatedByParams(SearchParams searchParams, Pageable pageable);
 }
